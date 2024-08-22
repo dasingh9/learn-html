@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Selectors</title>
+
+    <style>
+        .square {
+            background-color: yellowgreen;
+            width: 200px;
+            height: 200px;
+        }
+
+        .circle {
+            background-color: red;
+            border-radius: 50%;
+        }
+        .c-200px {
+            width: 200px;
+            height: 200px;
+        }
+        .c-400px {
+            width: 400px;
+            height: 400px;
+        }
+
+        .color-yellow {
+            background-color: yellow!important;
+            color:blue;
+        }
+
+        .color-pink {
+            background-color: pink;
+            color:red;
+        }
+
+        div.content > .products-container > .products-list {
+            background-color: yellow;
+            margin: 10px;
+            padding:10px
+        }
+
+        input[type="button"] {
+            background-color: aqua;
+        }
+
+        input[type="text"] {
+            background-color:antiquewhite;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        a::before {
+            content: "😊 ";
+        }
+        
+       
+
+    </style>
+
+    <script>
+        function showDiv() {
+            document.getElementById("firstDiv").style.display = "block";
+        }
+
+        function hideDiv() {
+            document.getElementById("firstDiv").style.display = "none";
+        }
+    </script>
+
+</head>
+<body>
+
+
+<div style="background-color: blue; height: 100px; width:100px; 
+    position: absolute; left:300px; ">
+</div>
+
+    
+    
+
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Table</title>
+</head>
+
+<body>
+    <div id="errorMessage" style="color: red;"></div>
+    <table id="userTable" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Avatar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- User rows will be inserted here -->
+        </tbody>
+    </table>
+
+    <script type="module">
+
+        import { UserService } from './services/user-service.js';
+        import { UserDao } from './dao/user-dao.js';
+        import { CustomError } from './models/custom-error.js';
+
+        // Function to fetch and insert user data into HTML table
+        async function getUsers() {
+            const userDao = new UserDao();
+            const userService = new UserService(userDao);   //dependency injection
+            const users = await userService.getUsers();
+            return users;
+            /*fetch('https://reqres.in/api/users') // request data from this server
+                // when it completes, access the JSON from the HTTP response sent by resolved promise
+                .then(response => response.json()) // .json() also returns a promise
+                .then(json => {
+                    printUsersToHtmlTable(json.data);
+                }) // log the returned JSON to the browser console
+                .catch(error => console.error(error)) // if there was an error, log that too
+                */
+        }
+
+        function printUsersToHtmlTable(users) {
+            const tableBody = document.getElementById('userTable').getElementsByTagName('tbody')[0];
+            users.forEach(user => {
+                let row = tableBody.insertRow();
+                let cellId = row.insertCell(0);
+                let cellName = row.insertCell(1);
+                let cellEmail = row.insertCell(2);
+                let cellAvatar = row.insertCell(3);
+
+                cellId.textContent = user.id;
+                cellName.textContent = user.name;
+                cellEmail.textContent = user.email;
+                cellAvatar.innerHTML = `<img src="${user.avatar}" alt="Avatar" style="width:50px;height:50px;">`;
+            });
+        }
+
+        // Call the function to populate the table
+        async function getAndPrintData() {
+            try {
+                const users = await getUsers();
+                printUsersToHtmlTable(users);
+            }
+            catch (error) {
+                if (error instanceof CustomError) {
+                    console.log("Custom Error:", error.message);
+                    document.getElementById("errorMessage").innerText = error.message;
+                } else {
+                    console.log("Failed to get users");
+                }
+                // document.getElementById("errorMessage").innerText = error.message;
+            }
+
+        }
+
+        getAndPrintData();
+    </script>
+</body>
+
+</html>
